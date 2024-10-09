@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Image Generator</title>
+    <style>
+        body 
+	{
+            	font-family: Arial, sans-serif;
+           	text-align: center;
+            	margin: 0;
+            	height: 100vh;
+            	background-color: #f0f8ff;
+            	display: flex;
+          	 justify-content: center;
+            	align-items: center;
+           	flex-direction: column;
+        }
+
+        img 
+	{
+           	max-width: 100%;
+            	height: auto;
+            	display: none;
+        }
+
+        #mainText, #letBeginText 
+	{
+            	font-size: 32px;
+            	color: #4a90e2;
+            	margin: 20px;
+        }
+
+        #letBeginText
+	 {
+            	display: none;
+            	color: #e94e77;
+        }
+
+        #timer 
+	{
+            	position: absolute;
+            	left: 220px;
+            	top: 10px;
+            	width: 60px;
+            	height: 60px;
+            	border-radius: 50%;
+            	border: 4px solid #4a90e2;
+            	color: #4a90e2;
+            	font-size: 24px;
+            	line-height: 60px;
+            	display: none;
+        }
+
+        #imageContainer 
+	{
+            	display: flex;
+            	align-items: center;
+             	position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="mainText">Probably fun 🎉</h1>
+    <div id="letBeginText">Let's begin 🚀</div>
+    <div id="imageContainer">
+        <img id="collageImage" src="https://raw.githubusercontent.com/krother/probably_fun/refs/heads/main/images/plots/Collage.png" alt="Collage Image" width="400">
+        <div id="timer">20</div>
+    </div>
+    <img id="randomImage" alt="Random Image" width="400">
+
+    <script>
+        const images = 
+	[
+            	"https://raw.githubusercontent.com/krother/probably_fun/refs/heads/main/images/plots/barchart.png",
+           	 "https://raw.githubusercontent.com/krother/probably_fun/refs/heads/main/images/plots/boxplot.png",
+            	"https://raw.githubusercontent.com/krother/probably_fun/refs/heads/main/images/plots/heatmap.png",
+            	"https://raw.githubusercontent.com/krother/probably_fun/refs/heads/main/images/plots/histo.png",
+            	"https://raw.githubusercontent.com/krother/probably_fun/refs/heads/main/images/plots/logreg.png",
+           	 "https://raw.githubusercontent.com/krother/probably_fun/refs/heads/main/images/plots/outlier.png",
+            	"https://raw.githubusercontent.com/krother/probably_fun/refs/heads/main/images/plots/piechart.png",
+            	"https://raw.githubusercontent.com/krother/probably_fun/refs/heads/main/images/plots/sample.png",
+            	"https://raw.githubusercontent.com/krother/probably_fun/refs/heads/main/images/plots/scatter.png",
+            	"https://raw.githubusercontent.com/krother/probably_fun/refs/heads/main/images/plots/timeseries.png",
+        ];
+
+        let countdown;
+
+        function startImageDisplay() 
+	{
+            	showElement('collageImage');
+            	setTimeout(() =>
+		 {
+                	hideElement('mainText');
+                	hideElement('collageImage');
+                	showElement('letBeginText');
+                	setTimeout(startRandomImages, 3000);
+            	}, 3000);
+        }
+
+        function startRandomImages()
+	 {
+           	 hideElement('letBeginText');
+           	 showElement('randomImage');
+            	showElement('timer');
+            	changeImage();
+            	setInterval(changeImage, 20000);
+        }
+
+        function changeImage() 
+	{
+            	document.getElementById('randomImage').src = images[Math.floor(Math.random() * images.length)];
+            	resetCountdown(20);
+        }
+
+        function resetCountdown(seconds)
+	 {
+            	clearInterval(countdown);
+            	let timeLeft = seconds;
+           	 document.getElementById('timer').innerText = timeLeft;
+            	countdown = setInterval(() => 
+		{
+                	timeLeft--;
+                	document.getElementById('timer').innerText = timeLeft;
+                	if (timeLeft <= 0) clearInterval(countdown);
+            	}, 1000);
+        }
+
+        function showElement(id)
+	 {
+            	document.getElementById(id).style.display = 'block';
+        }
+
+        function hideElement(id) 
+	{
+            	document.getElementById(id).style.display = 'none';
+        }
+
+        startImageDisplay();
+    </script>
+</body>
+</html>
